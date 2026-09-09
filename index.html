@@ -4,39 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>3D CAD ARビューアー</title>
+    
+    <!-- Googleが開発・提供している、最も安定した公式3D/ARライブラリを読み込みます -->
+    <script type="module" src="https://googleapis.com"></script>
+    
     <style>
         body {
             margin: 0;
+            background-color: #f9f9f9;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #f0f0f0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
-        .ar-button {
-            display: inline-block;
-            padding: 16px 32px;
-            font-size: 18px;
-            font-weight: bold;
-            color: white;
-            background-color: #007aff;
-            border-radius: 12px;
-            text-decoration: none;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        /* 画面いっぱいに3Dビューアーを表示する設定 */
+        model-viewer {
+            width: 100%;
+            height: 100%;
+            background-color: #ffffff;
         }
     </style>
 </head>
 <body>
 
     <!-- 
-      iPhone専用の公式AR起動リンクです。
-      rel="ar" をつけることで、Safariが自動的に「本物のARカメラ」を起動します。
-      HIROマーカーなどの紙も一切不要になり、床を認識してモデルが置けます！
+        model-viewer要素：
+        src: 6.4MBのmodel.glbを指定します。
+        ar: ARボタンを自動で表示させます。
+        ar-modes: iOS用の「quick-look」を最優先で起動させます。
+        camera-controls: 指で触って回転・拡大できるようにします。
     -->
-    <a rel="ar" href="model.glb" class="ar-button">
-        ARでCADモデルを表示する
-    </a>
+    <model-viewer 
+        src="model.glb" 
+        ar 
+        ar-modes="quick-look webxr scene-viewer" 
+        camera-controls 
+        touch-action="pan-y"
+        alt="CAD 3Dモデル">
+    </model-viewer>
 
 </body>
 </html>
