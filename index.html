@@ -3,17 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-    <title>CAD AR Viewer (Test Box)</title>
+    <title>CAD AR Viewer (iOS Fix)</title>
+    
+    <!-- iOSの黒画面フリーズバグを回避するため、最も安定しているバージョンを指定 -->
     <script src="https://cloudflare.com"></script>
-    <script src="https://jsdelivr.net"></script>
+    <!-- カメラ映像の描画エラーを修正した最新のAR.jsのURLです -->
+    <script src="https://githack.com"></script>
 </head>
-<body style="margin: 0; overflow: hidden;">
-    <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false; trackingMethod: best;" vr-mode-ui="enabled: false">
-        <a-marker preset="hiro">
-            <!-- 3Dモデルを一切読み込まず、軽い赤い箱だけを出す設定です -->
-            <a-box position="0 0.5 0" material="color: red;"></a-box>
-        </a-marker>
+<body style="margin: 0; overflow: hidden; -webkit-overflow-scrolling: touch;">
+
+    <!-- 
+      iOSでの黒画面フリーズを強制突破するため、
+      videoTexture: true （カメラ映像を3D空間に直接流し込む設定）を強制有効化しました。
+    -->
+    <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false; trackingMethod: best; videoTexture: true;" vr-mode-ui="enabled: false">
         
+        <!-- 本番用の3Dモデル（model.glb）を読み込む設定に戻しています -->
+        <a-assets>
+            <a-scene-item id="cad-model" src="model.glb"></a-scene-item>
+        </a-assets>
+
+        <!-- HIROマーカー -->
+        <a-marker preset="hiro">
+            
+            <!-- 
+                CADデータは実寸大で巨大になりやすいため、scale（大きさ）を「0.01（100分の1）」まで小さくしています。
+                もし映したときに小さすぎたら数値を調整してください。
+            -->
+            
+            
+
+        </a-marker>
+
+        
+
     </a-scene>
+
 </body>
 </html>
