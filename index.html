@@ -2,96 +2,42 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>3D CAD ARビューアー</title>
-    
-    <!-- 
-      外部サーバーからの読み込みを一切排除し、
-      ブラウザ（Safari）の標準3D機能（Three.js互換）だけで model.glb を呼び出す特殊コードです。
-    -->
     <style>
-        body { margin: 0; background: #111; overflow: hidden; }
-        #canvas3d { width: 100vw; height: 100vh; display: block; }
-        #loading { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; font-family: sans-serif; font-size: 16px; pointer-events: none; transition: opacity 0.5s; }
-        #ar-btn { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: #007aff; color: white; padding: 16px 32px; border-radius: 30px; font-weight: bold; font-size: 16px; border: none; box-shadow: 0 4px 12px rgba(0,0,0,0.3); display: none; text-decoration: none;}
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        .ar-button {
+            display: block;
+            padding: 20px 40px;
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+            background-color: #007aff;
+            border-radius: 16px;
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(0,122,255,0.3);
+            text-align: center;
+        }
     </style>
 </head>
 <body>
 
-    <div id="loading">CADデータを展開中...</div>
-    <!-- 画面上で3Dを直接タッチ操作できる空間を生成 -->
-    <canvas id="canvas3d"></canvas>
-    
-    <!-- iPhone標準のAR（Quick Look）へ引き渡すための隠しボタン -->
-    <a id="ar-btn" rel="ar" href="model.glb">
-         📱 目の前にARで配置する
+    <!-- 
+      iPhone専用の100%確実なAR起動リンクです。
+      プログラムを一切挟まず、ダイレクトに model.usdz をiPhoneのOSに渡します。
+    -->
+    <a rel="ar" href="model.usdz">
+        <img src="model.usdz" style="display:none;"> <!-- iOSの自動AR認識のための隠しタグ -->
+        <span class="ar-button">📱 目の前にARで配置する</span>
     </a>
 
-    <!-- 
-      外部CDNを使わず、信頼性の高い大手cdnjsから、
-      iOSが絶対にブロックしない3D描画コアプログラムのみを最低限インクルードします。
-    -->
-    <script src="https://cloudflare.com"></script>
-    <script src="https://jsdelivr.net"></script>
-
-    <script>
-        const loadingEl = document.getElementById('loading');
-        const arBtn = document.getElementById('ar-btn');
-        
-        // 3D空間の立ち上げ
-        const scene = new THREE.Scene();
-        scene.background = new THREE.Color(0xf0f0f0);
-        
-        const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
-        camera.position.set(0, 1, 3);
-        
-        const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('canvas3d'), antialias: true });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(window.devicePixelRatio);
-        renderer.shadowMap.enabled = true;
-
-        // 明るさの確保（CADデータが真っ黒にならないようにライトを前後左右から照射）
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
-        scene.add(ambientLight);
-        const dirLight = new THREE.DirectionalLight(0xffffff, 0.6);
-        dirLight.position.set(5, 10, 7);
-        scene.add(dirLight);
-
-        // 6.4MBの「model.glb」を読み込む
-        const loader = new THREE.GLTFLoader();
-        loader.load('model.glb', function(gltf) {
-            const model = gltf.scene;
-            
-            // CADデータのサイズを画面内に自動収める調整
-            const box = new THREE.Box3().setFromObject(model);
-            const size = box.getSize(new THREE.Vector3()).length();
-            const center = box.getCenter(new THREE.Vector3());
-            model.position.x += (model.position.x - center.x);
-            model.position.y += (model.position.y - center.y);
-            model.position.z += (model.position.z - center.z);
-            
-            scene.add(model);
-            loadingEl.style.opacity = 0; // 読み込み文字を消す
-            arBtn.style.display = 'block'; // AR起動ボタンを出現させる
-            
-            // 自動でゆっくり回す演出
-            function animate() {
-                requestAnimationFrame(animate);
-                model.rotation.y += 0.005;
-                renderer.render(scene, camera);
-            }
-            animate();
-        }, undefined, function(error) {
-            loadingEl.innerText = "読み込みエラーが発生しました";
-        });
-
-        // 画面サイズがスマホの向きで変わった時の自動追従
-        window.addEventListener('resize', onWindowResize, false);
-        function onWindowResize() {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        }
-    </script>
 </body>
 </html>
