@@ -31,11 +31,10 @@
 <body>
 
     <!-- 
-      iPhone専用の100%確実なAR起動リンクです。
-      プログラムを一切挟まず、ダイレクトに model.usdz をiPhoneのOSに渡します。
+      type="model/vnd.usdz+zip" を追加しました。
+      これにより、GitHub側の設定を無視して、iPhoneが確実にARデータとして強制認識します。
     -->
-    <a rel="ar" href="model.usdz">
-        <img src="model.usdz" style="display:none;"> <!-- iOSの自動AR認識のための隠しタグ -->
+    <a rel="ar" href="model.usdz" type="model/vnd.usdz+zip">
         <span class="ar-button">📱 目の前にARで配置する</span>
     </a>
 
