@@ -31,12 +31,33 @@
 <body>
 
     <!-- 
-      type="model/vnd.usdz+zip" を追加しました。
-      これにより、GitHub側の設定を無視して、iPhoneが確実にARデータとして強制認識します。
+      ★ファイル名変更エリア★
+      「src="model.usdz"」の「model.usdz」の部分を、GitHubにアップロードした好きなファイル名に書き換えてください。
+      (例: src="part_A.usdz" や src="car_model.usdz" など)
     -->
-    <a rel="ar" href="model.usdz" type="model/vnd.usdz+zip">
+    <a id="ar-link" rel="ar" href="#" type="model/vnd.usdz+zip" data-usdz-src="pen.usdz">
         <span class="ar-button">📱 目の前にARで配置する</span>
     </a>
+
+    <!-- 
+      設定されたファイル名をiPhoneへ正しく引き渡すための自動プログラム 
+    -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const arLink = document.getElementById("ar-link");
+            // data-usdz-srcに書かれたファイル名を取得
+            const usdzFileName = arLink.getAttribute("data-usdz-src");
+            
+            // リンク先（href）を自動的にそのファイル名に書き換える
+            arLink.href = usdzFileName;
+            
+            // iOSの自動認識を助ける隠し画像を裏側で生成
+            const img = document.createElement("img");
+            img.src = usdzFileName;
+            img.style.display = "none";
+            arLink.appendChild(img);
+        });
+    </script>
 
 </body>
 </html>
