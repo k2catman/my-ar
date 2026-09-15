@@ -10,13 +10,10 @@
     <h1>複数機器のレイアウト検討</h1>
     
     <!-- 
-        【最終解決】
-        href の直後に直接「double-model.reality」を指定し、
-        さらに後ろに「#canonicalWebPageURL=」のダミーパラメータを結合します。
-        これにより、Safariがリンクの末尾（拡張子）を「.reality」として正しく読み込み、
-        確実に2台同時配置のデータを直接起動させることができます。
+        【キャッシュ完全回避コード】
+        ファイル名の後ろに「?v=12345」と足すことで、iPhoneの古いキャッシュ（記憶）を強制的に破壊します。
     -->
-    <a rel="ar" href="double-model.reality#canonicalWebPageURL=https://google.com" style="padding: 15px 30px; background: #007AFF; color: white; text-decoration: none; border-radius: 10px; font-weight: bold; display: inline-block;">
+    <a rel="ar" href="double-model.reality?v=12345#canonicalWebPageURL=https://google.com" style="padding: 15px 30px; background: #007AFF; color: white; text-decoration: none; border-radius: 10px; font-weight: bold; display: inline-block;">
         2つのモデルを同時にAR配置
     </a>
 
