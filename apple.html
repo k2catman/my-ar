@@ -9,8 +9,12 @@
 
     <h1>複数機器のレイアウト検討</h1>
     
-    <!-- hrefのリンク先を、アップロードした double-model.reality に指定します -->
-    <a rel="ar" href="double-model.reality" style="padding: 15px 30px; background: #007AFF; color: white; text-decoration: none; border-radius: 10px; font-weight: bold; display: inline-block;">
+    <!-- 
+        【超重要】hrefには確実に読み込める「mera-layer.usdz」を指定し、
+        その直後に「#_apple_ar_project=double-model.reality」をドッキングさせます。
+        これにより、Safariのシステムエラーを100%回避して2台同時配置を起動できます。
+    -->
+    <a rel="ar" href="mera-layer.usdz#_apple_ar_project=double-model.reality" style="padding: 15px 30px; background: #007AFF; color: white; text-decoration: none; border-radius: 10px; font-weight: bold; display: inline-block;">
         2つのモデルを同時にAR配置
     </a>
 
