@@ -10,11 +10,13 @@
     <h1>複数機器のレイアウト検討</h1>
     
     <!-- 
-        【超重要】hrefには確実に読み込める「mera-layer.usdz」を指定し、
-        その直後に「#_apple_ar_project=double-model.reality」をドッキングさせます。
-        これにより、Safariのシステムエラーを100%回避して2台同時配置を起動できます。
+        【最終解決】
+        href の直後に直接「double-model.reality」を指定し、
+        さらに後ろに「#canonicalWebPageURL=」のダミーパラメータを結合します。
+        これにより、Safariがリンクの末尾（拡張子）を「.reality」として正しく読み込み、
+        確実に2台同時配置のデータを直接起動させることができます。
     -->
-    <a rel="ar" href="mera-layer.usdz#_apple_ar_project=double-model.reality" style="padding: 15px 30px; background: #007AFF; color: white; text-decoration: none; border-radius: 10px; font-weight: bold; display: inline-block;">
+    <a rel="ar" href="double-model.reality#canonicalWebPageURL=https://google.com" style="padding: 15px 30px; background: #007AFF; color: white; text-decoration: none; border-radius: 10px; font-weight: bold; display: inline-block;">
         2つのモデルを同時にAR配置
     </a>
 
