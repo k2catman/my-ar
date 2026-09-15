@@ -4,16 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AR.js マーカー型AR開発</title>
-    <!-- A-Frame と AR.js (A-Frame版) のライブラリを読み込み -->
-    <script src="https://aframe.io"></script>
-    <script src="https://githack.com"></script>
+    <!-- 配信元を cdnjs / unpkg の安定サーバーに変更 -->
+    <script src="https://cloudflare.com"></script>
+    <script src="https://unpkg.com"></script>
 </head>
 <body style="margin: 0; overflow: hidden;">
 
-    <!-- AR.js のシーン設定（Webcamをソースに指定） -->
+    <!-- AR.js のシーン設定 -->
     <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
         
-        <!-- 3Dモデルのアセット定義（ファイル名を mera-layer.glb に変更） -->
+        <!-- 3Dモデルのアセット定義 -->
         <a-assets>
             <a-asset-item id="ar-model" src="mera-layer.glb"></a-asset-item>
         </a-assets>
